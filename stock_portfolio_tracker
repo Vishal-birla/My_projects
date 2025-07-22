@@ -1,0 +1,40 @@
+# Step 1: Define stock prices
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOG": 2800,
+    "AMZN": 3500,
+    "MSFT": 300
+}
+
+# Step 2: Get user input
+portfolio = {}
+while True:
+    stock = input("Enter stock symbol (or 'done' to finish): ").upper()
+    if stock == 'DONE':
+        break
+    if stock in stock_prices:
+        quantity = int(input(f"Enter quantity of {stock}: "))
+        portfolio[stock] = quantity
+    else:
+        print("Stock not found in price list!")
+
+# Step 3: Calculate total value
+total_value = 0
+for stock, qty in portfolio.items():
+    price = stock_prices[stock]
+    total_value += price * qty
+    print(f"{stock}: {qty} x ${price} = ${qty * price}")
+
+print(f"\n📊 Total Investment Value: ${total_value}")
+
+# Step 4: (Optional) Save to file
+save = input("Do you want to save the result to a file? (yes/no): ").lower()
+if save == "yes":
+    filename = input("Enter filename (with .txt or .csv): ")
+    with open(filename, "w") as f:
+        f.write("Stock,Quantity,Price,Total\n")
+        for stock, qty in portfolio.items():
+            f.write(f"{stock},{qty},{stock_prices[stock]},${qty * stock_prices[stock]}\n")
+        f.write(f"\nTotal Investment, , ,${total_value}\n")
+    print(f"✅ Result saved to {filename}")
